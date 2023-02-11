@@ -43,5 +43,28 @@ exports.regUser = (req, res) => {
 
 
 exports.login = (req, res) => {
-    res.send('login ok')
+
+    // 接收表单数据
+    const uesrinfo = req.body
+
+    // 定义SQL语句
+    const sql = 'select * from ev_users where username=?'
+
+    // 执行sql语句
+    db.query(sql, uesrinfo.username, (err, results) => {
+
+        //执行sql 失败
+        if (err) { return res.cc(err.message) }
+
+        // 是否成功
+        if (results.affectedRows !== 1) { return res.cc('登陆失败！') }
+
+        // 密码比较
+        const compareResult = bycrypt.compareSync(uesrinfo.password, results[0].password)
+        if (!compareResult) { return res.cc('密码不正确') }
+
+        // 
+        res.send('login ok')
+    })
+
 }
