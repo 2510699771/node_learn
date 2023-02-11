@@ -15,7 +15,7 @@ const { reg_login_schema } = require('../schema/user')
 router.post('/reguser', expressJoi(reg_login_schema), user_hander.regUser)
 
 // 登陆
-router.post('/login', user_hander.login)
+router.post('/login', expressJoi(reg_login_schema), user_hander.login)
 
 
 
