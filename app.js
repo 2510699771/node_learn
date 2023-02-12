@@ -42,6 +42,10 @@ app.use('/api', userRouter)
 const userinfoRouter = require('./router/userinfo')
 app.use('/my', userinfoRouter)
 
+// 导入并使用文章分类的路由模块
+const artcateRouter = require('./router/artcate')
+app.use('/my/article', artcateRouter)
+
 
 
 // 2.定义错误级别中间件
