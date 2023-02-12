@@ -1,6 +1,12 @@
 // 对应注册的处理函数
 const db = require('../db/index')
 const bycrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+// 加载全局配置
+const config = require('../config')
+
+
+
 
 exports.regUser = (req, res) => {
     const uesrinfo = req.body
@@ -63,8 +69,14 @@ exports.login = (req, res) => {
         const compareResult = bycrypt.compareSync(uesrinfo.password, results[0].password)
         if (!compareResult) { return res.cc('密码不正确') }
 
+
+        // 在服务器生成TOKEN字符串
+        const user = { ...results[0], password: '', use_pic: '' }
+        // 对用户信息进行加密，生成token字符串
+        const tokenStr = jwt.sign(user, config.jwtSecredKey, { expiresIn: config.expiresIn })
+
         // 
-        res.send('login ok')
+        res.send({ status: 0, message: '登陆成功', token: 'Bearer' + tokenStr })
     })
 
 }
