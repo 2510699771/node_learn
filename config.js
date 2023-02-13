@@ -1,8 +1,9 @@
-// 全局配置的配置文件
+// 这是一个全局配置的文件
+
 
 module.exports = {
-    // 加密和解密touken秘钥
-    jwtSecretKey: 'itheima',
-    // token有效期
+    // token秘钥
+    jwtSecredKey: 'itheima No1.',
+    // 有效期
     expiresIn: '10h'
 }
